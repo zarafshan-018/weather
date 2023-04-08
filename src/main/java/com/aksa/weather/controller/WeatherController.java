@@ -1,6 +1,10 @@
 package com.aksa.weather.controller;
 
+import com.aksa.weather.model.Location;
 import com.aksa.weather.model.WeatherApiResponse;
+import com.aksa.weather.model.WeatherReport;
+import com.aksa.weather.repository.LocationRepository;
+import com.aksa.weather.repository.WeatherReportRepository;
 import com.aksa.weather.wrapper.ReportList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -17,6 +21,8 @@ public class WeatherController {
 
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    LocationRepository locationRepository;
 
     @GetMapping("/report")
     public WeatherApiResponse getAllDataByDate() {
@@ -24,6 +30,11 @@ public class WeatherController {
         String URL = "https://api.openweathermap.org/data/2.5/forecast?q=Islamabad&units=metric&appid=ba3f4a9beef094d25cbc61727dd16bf5";
         WeatherApiResponse responseEntity = restTemplate.getForObject(URL,
                 WeatherApiResponse.class);
+
+        List<WeatherReport> weatherData = responseEntity.getWeatherData();
+        Location location = responseEntity.getLocation();
+        location.addWeatherReports(weatherData);
+        locationRepository.save(location);
 
         return responseEntity;
 

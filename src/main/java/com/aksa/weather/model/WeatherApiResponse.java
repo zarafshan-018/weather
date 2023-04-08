@@ -2,15 +2,15 @@ package com.aksa.weather.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +28,8 @@ public class WeatherApiResponse implements Serializable {
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Embeddable
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
