@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString
 @EqualsAndHashCode
 @Builder
 @NoArgsConstructor

@@ -1,15 +1,17 @@
 package com.aksa.weather.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode
@@ -27,14 +29,20 @@ public class WeatherReport {
     @JsonProperty("main")
     @Embedded
     private Temperature temp;
-    @JsonProperty("dt_txt")
-    @Column(unique=true)
-    private String date;
+//    @JsonProperty("dt_txt")
+//    @Column(unique = true)
+//    private String date;
 
-    @ManyToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "location_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id")
     @JsonBackReference
     private Location location;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("dt_txt")
+    private LocalDateTime date;
 
     @Override
     public String toString(){

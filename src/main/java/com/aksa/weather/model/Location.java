@@ -9,9 +9,6 @@ import javax.persistence.*;
 import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString
-@EqualsAndHashCode
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -23,7 +20,7 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long location_id;
     @JsonProperty("name")
-    @Column(unique=true)
+    @Column(unique = true)
     private String city;
     @JsonProperty("country")
     private String Country;
