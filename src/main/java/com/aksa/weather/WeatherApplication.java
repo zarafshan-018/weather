@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class WeatherApplication {
 
+	//Learning git hub!!!
+	
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherApplication.class, args);
 	}
